@@ -1,0 +1,165 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LichTapPT>
+
+@{
+    ViewBag.Title = "Quản Lý Lịch Tập PT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: #f7f7f7;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    .content-card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        margin: 25px auto;
+        max-width: 1000px;
+        border: 1px solid #e1e1e1;
+    }
+
+    .card-header h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .btn-add {
+        background: #4a90e2;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.2s;
+        font-size: 14px;
+    }
+
+        .btn-add:hover {
+            background: #357ABD;
+        }
+
+    /* Table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #e6e6e6;
+        font-size: 14px;
+    }
+
+    th {
+        background: #f1f1f1;
+        color: #333;
+        text-align: left;
+    }
+
+    tr:hover td {
+        background: #fafafa;
+    }
+
+    .badge-info {
+        background: #4a90e2;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    .text-success {
+        color: #2e7d32;
+    }
+
+    .text-warning {
+        color: #c47f00;
+    }
+
+    .action-links a {
+        font-size: 13px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        margin-right: 6px;
+    }
+
+    .btn-edit {
+        background: #6aa6d8;
+    }
+
+    .btn-delete {
+        background: #e57373;
+    }
+
+    .btn-edit:hover {
+        background: #4e89c2;
+    }
+
+    .btn-delete:hover {
+        background: #d65a5a;
+    }
+</style>
+
+<div class="content-card">
+    <div class="card-header">
+        <h2>Quản Lý Lịch Tập PT</h2>
+    </div>
+
+    <div class="card-toolbar" style="margin: 15px 0;">
+        @Html.ActionLink("➕ Thêm Lịch Tập Mới", "Create", null, new { @class = "btn-add" })
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ngày Tập</th>
+                <th>Giờ Bắt Đầu</th>
+                <th>Giờ Kết Thúc</th>
+                <th>Khách Hàng</th>
+                <th>PT Hướng Dẫn</th>
+                <th>Trạng Thái</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NgayTap.ToString("dd/MM/yyyy")</td>
+                    <td>@item.GioBatDau.ToString(@"hh\:mm")</td>
+                    <td>@item.GioKetThuc.ToString(@"hh\:mm")</td>
+
+                    <td><strong>@item.DangKyPT.KhachHang.TenKH</strong></td>
+
+                    <td>
+                        <span class="badge-info">
+                            @item.DangKyPT.NhanVien.TenNV
+                        </span>
+                    </td>
+
+                    <td>
+                        @if (item.TrangThai == "Đã tập")
+                        {
+                            <span class="text-success">@item.TrangThai</span>
+                        }
+                        else
+                        {
+                            <span class="text-warning">@item.TrangThai</span>
+                        }
+                    </td>
+
+                    <td class="action-links">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaLichPT }, new { @class = "btn-edit" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaLichPT }, new { @class = "btn-delete" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

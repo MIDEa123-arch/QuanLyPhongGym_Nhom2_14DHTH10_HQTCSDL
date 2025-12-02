@@ -1,0 +1,218 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.KhachHang
+@{
+    ViewBag.Title = "Xóa Khách Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container-custom {
+        padding: 30px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: #5dade2;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .page-header h2 {
+        color: white;
+        margin: 0;
+        font-weight: 500;
+        font-size: 26px;
+    }
+
+    .delete-container {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .warning-message {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin-bottom: 25px;
+        border-radius: 5px;
+    }
+
+    .warning-message h3 {
+        color: #856404;
+        font-size: 18px;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .info-title {
+        color: #5dade2;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #5dade2;
+    }
+
+    .info-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    .info-item {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #555;
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .info-value {
+        color: #333;
+        flex: 1;
+    }
+
+    .button-group {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+    }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s;
+        line-height: 1;
+    }
+
+    .btn-back:hover {
+        background: #5a6268;
+        color: white;
+        text-decoration: none;
+    }
+
+    @@media (max-width: 768px) {
+        .delete-container {
+            padding: 20px;
+        }
+
+        .page-header {
+            padding: 20px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .info-item {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-label {
+            width: 100%;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="container-custom">
+    <div class="page-header">
+        <h2>Xóa Khách Hàng</h2>
+    </div>
+
+    <div class="delete-container">
+        <div class="warning-message">
+            <h3>⚠️ Bạn có chắc chắn muốn xóa khách hàng này?</h3>
+        </div>
+
+        <h4 class="info-title">Thông Tin Khách Hàng</h4>
+
+        <dl class="info-list">
+            <div class="info-item">
+                <dt class="info-label">Tên khách hàng:</dt>
+                <dd class="info-value">@Model.TenKH</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Ngày sinh:</dt>
+                <dd class="info-value">@(Model.NgaySinh.HasValue ? Model.NgaySinh.Value.ToString("dd/MM/yyyy") : "")</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Giới tính:</dt>
+                <dd class="info-value">@Model.GioiTinh</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Số điện thoại:</dt>
+                <dd class="info-value">@Model.SDT</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Email:</dt>
+                <dd class="info-value">@Model.Email</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Mã loại khách hàng:</dt>
+                <dd class="info-value">@Model.MaLoaiKH</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Tên đăng nhập:</dt>
+                <dd class="info-value">@Model.TenDangNhap</dd>
+            </div>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="button-group">
+                <button type="submit" class="btn-delete">Xóa</button>
+                @Html.ActionLink("Quay Lại", "Index", null, new { @class = "btn-back" })
+            </div>
+        }
+    </div>
+</div>

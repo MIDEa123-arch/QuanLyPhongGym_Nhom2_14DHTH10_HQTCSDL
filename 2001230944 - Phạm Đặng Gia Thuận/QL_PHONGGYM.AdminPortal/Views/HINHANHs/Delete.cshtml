@@ -1,0 +1,165 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.HINHANH
+
+@{
+    ViewBag.Title = "Xóa hình ảnh sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="delete-container">
+    <div class="page-header">
+        <h2>🗑 Xóa hình ảnh sản phẩm</h2>
+        @Html.ActionLink("⬅ Quay lại danh sách", "Index", null, new { @class = "btn-back" })
+    </div>
+
+    <div class="confirm-box">
+        <p class="warning-text">Bạn có chắc chắn muốn xóa hình ảnh này không?</p>
+
+        <div class="image-preview">
+            <img src="@Url.Content("~/Content/Images/" + Model.Url)" alt="Ảnh sản phẩm" />
+        </div>
+
+        <div class="info-section">
+            <p><strong>Sản phẩm:</strong> @(Model.SanPham != null ? Model.SanPham.TenSP : "Không xác định")</p>
+            <p><strong>Đường dẫn hình ảnh:</strong> @Model.Url</p>
+            <p><strong>Ảnh chính:</strong> @(Model.IsMain == true ? "✔ Có" : "✖ Không")</p>
+
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="action-buttons">
+                <input type="submit" value="🗑 Xóa hình ảnh" class="btn-delete" />
+                @Html.ActionLink("Hủy", "Index", null, new { @class = "btn-cancel" })
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .delete-container {
+        max-width: 700px;
+        margin: 70px auto;
+        background: white;
+        border-radius: 14px;
+        padding: 35px 45px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        color: white;
+        padding: 14px 22px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn-back {
+        background: white;
+        color: #2563eb;
+        padding: 8px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: 0.2s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn-back:hover {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    .confirm-box {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 25px 30px;
+        text-align: center;
+    }
+
+    .warning-text {
+        color: #b91c1c;
+        font-weight: 600;
+        margin-bottom: 25px;
+        font-size: 16px;
+    }
+
+    .image-preview img {
+        max-width: 300px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .info-section {
+        text-align: left;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 15px 18px;
+        font-size: 15px;
+        color: #111827;
+        margin-bottom: 25px;
+    }
+
+    .info-section p {
+        margin: 6px 0;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .btn-delete {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-delete:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+        background: #9ca3af;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .btn-cancel:hover {
+        background: #6b7280;
+        transform: translateY(-2px);
+    }
+</style>

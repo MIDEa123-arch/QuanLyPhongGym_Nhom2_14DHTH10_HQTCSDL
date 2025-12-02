@@ -1,0 +1,132 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.GoiTap
+
+@{
+    ViewBag.Title = "Tạo Gói Tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .create-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 35px 45px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .create-header {
+        background: #5dade2;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .create-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #1a5276;
+        }
+
+    .form-control {
+        border-radius: 6px;
+        padding: 10px 12px;
+        border: 1px solid #ccddee;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #5dade2;
+            box-shadow: 0 0 4px rgba(93, 173, 226, 0.4);
+        }
+
+    .btn-create {
+        background: #5dade2;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+        .btn-create:hover {
+            background: #3498db;
+            color: white;
+        }
+
+    .btn-back {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        margin-left: 10px;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+            color: white;
+        }
+
+    .text-danger {
+        color: #e74c3c;
+        font-size: 13px;
+    }
+</style>
+
+<div class="create-container">
+    <div class="create-header">
+        <h2>✨ Tạo Gói Tập Mới</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenGoi)
+            @Html.EditorFor(model => model.TenGoi, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên gói..." } })
+            @Html.ValidationMessageFor(model => model.TenGoi, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThoiHan)
+            @Html.EditorFor(model => model.ThoiHan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập thời hạn (tháng)..." } })
+            @Html.ValidationMessageFor(model => model.ThoiHan, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gia)
+            @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập giá gói..." } })
+            @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTa)
+            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = 4, placeholder = "Nhập mô tả gói tập..." })
+            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="text-end mt-4">
+            <input type="submit" value="💾 Tạo Mới" class="btn-create" />
+            @Html.ActionLink("⬅️ Quay Lại", "Index", null, new { @class = "btn-back" })
+        </div>
+    }
+</div>

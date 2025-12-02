@@ -1,0 +1,199 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.ChuyenMon
+
+@{
+    ViewBag.Title = "Xóa Chuyên Môn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Lấy số lượng từ Controller gửi sang
+    int soLuongNV = ViewBag.SoLuongNhanVienDangCo != null ? (int)ViewBag.SoLuongNhanVienDangCo : 0;
+}
+
+<style>
+    .delete-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        max-width: 600px;
+        margin: 30px auto;
+        overflow: hidden;
+        border: 1px solid #fee2e2; /* Viền đỏ nhạt */
+    }
+
+    /* Header Cảnh báo đỏ */
+    .delete-header {
+        background-color: #fef2f2;
+        color: #b91c1c;
+        padding: 25px;
+        text-align: center;
+        border-bottom: 1px solid #fecaca;
+    }
+
+        .delete-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .delete-header p {
+            margin: 0;
+            font-size: 14px;
+            color: #7f1d1d;
+        }
+
+    .delete-body {
+        padding: 30px;
+    }
+
+    /* Bảng thông tin */
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+    .info-label {
+        font-weight: 600;
+        color: #64748b;
+    }
+
+    .info-value {
+        font-weight: 500;
+        color: #334155;
+        text-align: right;
+    }
+
+    .highlight {
+        color: #0ea5e9;
+        font-weight: 700;
+    }
+
+    .btn-delete-confirm {
+        background-color: #dc2626;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    }
+
+        .btn-delete-confirm:hover {
+            background-color: #b91c1c;
+            transform: scale(1.02);
+        }
+
+    .btn-cancel {
+        background-color: #f1f5f9;
+        color: #475569;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+        display: inline-block;
+    }
+
+        .btn-cancel:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+    .actions {
+        text-align: center;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    /* Style thông báo lỗi */
+    .text-danger {
+        color: #dc2626;
+        font-weight: 600;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Style cảnh báo vàng */
+    .alert-warning-custom {
+        background-color: #fffbeb;
+        border: 1px solid #fcd34d;
+        color: #92400e;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .alert-warning-custom i {
+            font-size: 18px;
+        }
+</style>
+
+<div class="delete-card">
+    <div class="delete-header">
+        <h2>🗑️ Xóa Chuyên Môn</h2>
+        <p>Bạn có chắc chắn muốn xóa chuyên môn này không? Hành động này không thể hoàn tác.</p>
+    </div>
+
+    <div class="delete-body">
+        <!-- QUAN TRỌNG: Hiển thị thông báo lỗi từ Controller -->
+        @Html.ValidationSummary(false, "Không thể xóa chuyên môn này:", new { @class = "text-danger" })
+
+        <!--
+          ============================================================
+          == HIỂN THỊ CẢNH BÁO TỪ FUNCTION SQL ==
+          ============================================================
+        -->
+        @if (soLuongNV > 0)
+        {
+            <div class="alert-warning-custom">
+                <i class="uil uil-exclamation-triangle"></i>
+                <div>
+                    <strong>Lưu ý quan trọng:</strong><br />
+                    Hiện đang có <strong>@soLuongNV nhân viên</strong> sở hữu chuyên môn này.
+                    Nếu bạn xóa, chuyên môn này sẽ bị gỡ bỏ khỏi hồ sơ của họ.
+                </div>
+            </div>
+        }
+        <!-- ============================================================ -->
+
+        <div class="info-row">
+            <span class="info-label">Tên Chuyên Môn:</span>
+            <span class="info-value highlight">@Html.DisplayFor(model => model.TenChuyenMon)</span>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">Mô Tả:</span>
+            <span class="info-value">
+                @Html.DisplayFor(model => model.MoTa)
+            </span>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="actions">
+                <button type="submit" class="btn-delete-confirm">
+                    <i class="uil uil-trash-alt"></i> Xác nhận Xóa
+                </button>
+                <a href="@Url.Action("Index")" class="btn-cancel">Hủy bỏ</a>
+            </div>
+        }
+    </div>
+</div>

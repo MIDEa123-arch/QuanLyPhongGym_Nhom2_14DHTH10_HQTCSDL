@@ -1,0 +1,142 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.CheckIn
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Check-in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .edit-container {
+        max-width: 700px;
+        margin: 50px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .edit-header {
+        background: #5dade2;
+        color: white;
+        padding: 22px;
+        border-radius: 10px;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+        .edit-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+    label {
+        font-weight: 600;
+        color: #1a5276;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .mb-3 {
+        margin-bottom: 20px; /* tăng khoảng cách giữa các trường */
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #d6eaf8;
+        padding: 10px;
+        transition: border-color 0.3s;
+        width: 100%;
+    }
+
+        .form-control:focus {
+            border-color: #5dade2;
+            box-shadow: 0 0 6px rgba(93,173,226,0.4);
+        }
+
+    .btn-save {
+        background: #5dade2;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-right: 12px;
+    }
+
+        .btn-save:hover {
+            background: #3498db;
+        }
+
+    .btn-back {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+            color: white;
+        }
+
+    .text-danger {
+        color: #e74c3c;
+        font-size: 13px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .form-actions {
+        margin-top: 35px;
+        text-align: right;
+    }
+</style>
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h2>✏️ Chỉnh Sửa Check-in</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+        @Html.HiddenFor(model => model.MaCheckIn)
+
+        <div class="mb-3">
+            <label>Khách Hàng</label>
+            @Html.DropDownList("MaKH", null, "-- Chọn khách hàng --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            <label>Thời Gian Vào</label>
+            @Html.TextBoxFor(model => model.ThoiGianVao, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.ThoiGianVao, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            <label>Thời Gian Ra</label>
+            @Html.TextBoxFor(model => model.ThoiGianRa, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.ThoiGianRa, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            <label>Trạng Thái</label>
+            @Html.EditorFor(model => model.TrangThai, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="💾 Lưu thay đổi" class="btn-save" />
+            @Html.ActionLink("⬅️ Quay lại", "Index", null, new { @class = "btn-back" })
+        </div>
+    }
+</div>

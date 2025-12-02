@@ -1,0 +1,154 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.CheckIn
+
+@{
+    ViewBag.Title = "Xóa Check-in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .delete-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .delete-header {
+        background: #5dade2;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+        .delete-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+    .delete-warning {
+        background: #fdecea;
+        color: #b71c1c;
+        padding: 15px 20px;
+        border-left: 5px solid #e74c3c;
+        border-radius: 6px;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .delete-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid #e9ecef;
+        padding: 12px 0;
+        margin-bottom: 10px;
+    }
+
+        .delete-item strong {
+            color: #1a5276;
+            font-weight: 600;
+            min-width: 200px;
+            font-size: 15px;
+        }
+
+    .delete-value {
+        color: #2c3e50;
+        font-size: 15px;
+        flex: 1;
+        text-align: right;
+        word-wrap: break-word;
+    }
+
+    .delete-actions {
+        text-align: right;
+        margin-top: 35px;
+    }
+
+    .btn-delete {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        margin-right: 12px;
+        display: inline-block;
+    }
+
+        .btn-delete:hover {
+            background: #c0392b;
+            color: white;
+        }
+
+    .btn-cancel {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-cancel:hover {
+            background: #7f8c8d;
+            color: white;
+            text-decoration: none;
+        }
+</style>
+
+<div class="delete-container">
+    <div class="delete-header">
+        <h2>🗑️ Xóa Check-in</h2>
+    </div>
+
+    <div class="delete-warning">
+        ⚠️ Bạn có chắc chắn muốn xóa bản ghi check-in này không?
+    </div>
+
+    <div class="delete-item">
+        <strong>Khách Hàng:</strong>
+        <span class="delete-value">@Model.KhachHang?.TenKH</span>
+    </div>
+
+    <div class="delete-item">
+        <strong>Thời Gian Vào:</strong>
+        <span class="delete-value">
+            @(Model.ThoiGianVao.ToString("dd/MM/yyyy HH:mm"))
+        </span>
+    </div>
+
+    <div class="delete-item">
+        <strong>Thời Gian Ra:</strong>
+        <span class="details-value">
+            @Model.ThoiGianRaFormatted
+        </span>
+
+    </div>
+
+    <div class="delete-item">
+        <strong>Trạng Thái:</strong>
+        <span class="delete-value">@Model.TrangThai</span>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="delete-actions">
+            <input type="submit" value="🗑️ Xóa" class="btn-delete" />
+            @Html.ActionLink("⬅️ Hủy", "Index", null, new { @class = "btn-cancel" })
+        </div>
+    }
+</div>

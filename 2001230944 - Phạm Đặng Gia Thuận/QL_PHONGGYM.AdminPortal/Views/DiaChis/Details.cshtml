@@ -1,0 +1,67 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.DiaChi
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DiaChi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KhachHang.TenKH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhachHang.TenKH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TinhThanhPho)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhThanhPho)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuanHuyen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuanHuyen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhuongXa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhuongXa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaChiCuThe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChiCuThe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LaDiaChiMacDinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LaDiaChiMacDinh)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

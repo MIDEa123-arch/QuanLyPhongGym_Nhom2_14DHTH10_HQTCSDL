@@ -1,0 +1,187 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.NhanVienChuyenMon
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Gán Chuyên Môn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Sử dụng lại CSS từ file Create (Gần giống nhau) -->
+<style>
+    .container-custom {
+        padding: 30px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: #5dade2;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-weight: 500;
+            font-size: 26px;
+        }
+
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-title {
+        color: #5dade2;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #5dade2;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #5dade2;
+            box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.1);
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-save {
+        background: #5dade2;
+        color: white;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .btn-save:hover {
+            background: #3498db;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-top: 15px;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+
+    .button-group {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+<div class="container-custom">
+    <div class="page-header">
+        <h2>Chỉnh Sửa Gán Chuyên Môn</h2>
+    </div>
+
+    <div class="form-container">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!--
+                LƯU Ý QUAN TRỌNG:
+                Chúng ta không thể "Sửa" (Edit) một Khóa Chính (Primary Key).
+                Nếu bạn muốn đổi (ví dụ: đổi chuyên môn cho NV 1), bạn phải:
+                1. Quay lại trang Index.
+                2. Xóa (Delete) dòng (MaNV=1, MaCM=8).
+                3. Tạo (Create) dòng mới (MaNV=1, MaCM=9).
+
+                Tuy nhiên, nếu bảng này có các trường dữ liệu PHỤ (ví dụ: "Ngày Gán"),
+                thì trang "Edit" này sẽ dùng để sửa các trường đó.
+
+                Code dưới đây là code "Edit" CHUẨN (dùng Dropdown).
+            -->
+
+            <h4 class="form-title">Thông Tin Gán Chuyên Môn</h4>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!--
+                BẮT BUỘC PHẢI DÙNG HiddenFor (trường ẩn)
+                để giữ lại 2 giá trị Khóa Chính khi nhấn "Lưu" (Save).
+            -->
+            @Html.HiddenFor(model => model.MaNV)
+            @Html.HiddenFor(model => model.MaCM)
+
+            <!--
+                Hiển thị 2 Dropdown, nhưng KHÓA LẠI (disabled)
+                để người dùng không thể sửa Khóa Chính
+            -->
+            <div class="form-group">
+                <label>Nhân Viên (Không thể đổi)</label>
+                @Html.DropDownListFor(model => model.MaNV, (SelectList)ViewBag.MaNV, new { @class = "form-control", disabled = "disabled" })
+            </div>
+
+            <div class="form-group">
+                <label>Chuyên Môn (Không thể đổi)</label>
+                @Html.DropDownListFor(model => model.MaCM, (SelectList)ViewBag.MaCM, new { @class = "form-control", disabled = "disabled" })
+            </div>
+
+            <!-- (Nếu bảng NhanVienChuyenMon của bạn có các trường khác,
+                 ví dụ: [TrangThai], [NgayGan],
+                 bạn sẽ thêm các ô nhập liệu (EditorFor) cho chúng ở đây) -->
+
+            <div class="button-group">
+                <!--
+                  Vì không có gì để sửa, chúng ta có thể ẩn nút "Lưu"
+                  <button type="submit" class="btn-save">Lưu</button>
+                -->
+                @Html.ActionLink("Quay Lại", "Index", null, new { @class = "btn-back" })
+            </div>
+        }
+    </div>
+</div>

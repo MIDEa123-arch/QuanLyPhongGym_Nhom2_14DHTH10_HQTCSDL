@@ -1,0 +1,153 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LoaiKhachHang
+
+@{
+    ViewBag.Title = "Thêm loại khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2>Thêm loại khách hàng</h2>
+    <a href="@Url.Action("Index", "LoaiKhachHangs")" class="btn-back">← Quay lại danh sách</a>
+</div>
+
+<div class="form-container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenLoai, "Tên loại khách hàng", new { @class = "form-label" })
+                @Html.EditorFor(model => model.TenLoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenLoai, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MucGiam, "Mức giảm (%)", new { @class = "form-label" })
+                @Html.EditorFor(model => model.MucGiam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MucGiam, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Thêm mới" class="btn-action save" />
+                <a href="@Url.Action("Index")" class="btn-action cancel">Hủy</a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f2f7ff;
+        font-family: "Segoe UI", sans-serif;
+        color: #1e293b;
+        margin: 20px;
+    }
+
+    /* --- HEADER --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #dbeafe;
+        color: #1e3a8a;
+        padding: 12px 20px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background-color: #3b82f6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+        .btn-back:hover {
+            background-color: #2563eb;
+        }
+
+    /* --- FORM CHÍNH --- */
+    .form-container {
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #1e3a8a;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.2s;
+    }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+    .text-danger {
+        color: #dc2626;
+        font-size: 13px;
+    }
+
+    /* --- NÚT --- */
+    .form-actions {
+        margin-top: 16px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-action {
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .btn-action.save {
+            background-color: #3b82f6;
+        }
+
+            .btn-action.save:hover {
+                background-color: #2563eb;
+            }
+
+        .btn-action.cancel {
+            background-color: #6b7280;
+        }
+
+            .btn-action.cancel:hover {
+                background-color: #4b5563;
+            }
+</style>

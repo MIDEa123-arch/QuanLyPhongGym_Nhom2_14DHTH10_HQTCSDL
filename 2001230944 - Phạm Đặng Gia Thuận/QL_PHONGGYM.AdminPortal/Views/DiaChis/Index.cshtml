@@ -1,0 +1,64 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.DiaChi>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.KhachHang.TenKH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TinhThanhPho)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuanHuyen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhuongXa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiaChiCuThe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LaDiaChiMacDinh)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TinhThanhPho)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuanHuyen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhuongXa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiaChiCuThe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LaDiaChiMacDinh)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaDC }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MaDC }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaDC })
+        </td>
+    </tr>
+}
+
+</table>

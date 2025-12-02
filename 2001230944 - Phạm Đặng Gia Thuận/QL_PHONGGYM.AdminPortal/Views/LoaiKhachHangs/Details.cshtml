@@ -1,0 +1,128 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LoaiKhachHang
+
+@{
+    ViewBag.Title = "Chi tiết loại khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2>Chi tiết loại khách hàng</h2>
+    <a href="@Url.Action("Index", "LoaiKhachHangs")" class="btn-back">← Quay lại danh sách</a>
+</div>
+
+<div class="details-container">
+    <table class="details-table">
+        <tr>
+            <th>Tên loại</th>
+            <td>@Html.DisplayFor(model => model.TenLoai)</td>
+        </tr>
+        <tr>
+            <th>Mức giảm (%)</th>
+            <td>@Html.DisplayFor(model => model.MucGiam)</td>
+        </tr>
+    </table>
+
+    <div class="details-actions">
+        <a href="@Url.Action("Edit", new { id = Model.MaLoaiKH })" class="btn-action edit">Chỉnh sửa</a>
+        <a href="@Url.Action("Index")" class="btn-action back">Quay lại</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f2f7ff;
+        font-family: "Segoe UI", sans-serif;
+        color: #1e293b;
+        margin: 20px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #dbeafe;
+        color: #1e3a8a;
+        padding: 12px 20px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background-color: #3b82f6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+        .btn-back:hover {
+            background-color: #2563eb;
+        }
+
+    /* --- KHUNG CHI TIẾT --- */
+    .details-container {
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+    }
+
+        .details-table th {
+            text-align: left;
+            width: 150px;
+            color: #1e3a8a;
+            padding: 8px 0;
+            font-weight: 600;
+        }
+
+        .details-table td {
+            padding: 8px 0;
+            color: #374151;
+        }
+
+    /* --- NÚT HÀNH ĐỘNG --- */
+    .details-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-action {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+        .btn-action.edit {
+            background-color: #3b82f6;
+        }
+
+            .btn-action.edit:hover {
+                background-color: #2563eb;
+            }
+
+        .btn-action.back {
+            background-color: #6b7280;
+        }
+
+            .btn-action.back:hover {
+                background-color: #4b5563;
+            }
+</style>

@@ -1,0 +1,219 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.HINHANH>
+
+@{
+    ViewBag.Title = "Danh Sách Hình Ảnh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h2>📸 Danh Sách Hình Ảnh Sản Phẩm</h2>
+        @Html.ActionLink("➕ Thêm Hình Ảnh Mới", "Create", null, new { @class = "btn-create" })
+    </div>
+
+    <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Ảnh chính</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(item.SanPham != null ? item.SanPham.TenSP : "Không có")</td>
+
+                        <td>
+                            <img src="@Url.Content("~/Content/Images/" + item.Url)"
+                                 alt="@item.SanPham?.TenSP"
+                                 class="preview-img" />
+                        </td>
+                        <td>
+                            @if (@item.IsMain == true)
+                            {
+                                <span class="badge badge-main">Ảnh chính</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-sub">Phụ</span>
+                            }
+                        </td>
+                        <td class="action-links">
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaHinh }, new { @class = "btn-action edit" })
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.MaHinh }, new { @class = "btn-action details" })
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaHinh }, new { @class = "btn-action delete" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    body {
+        background: #f0fdf4;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .page-container {
+        max-width: 1100px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        padding: 30px 40px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(90deg, #4ade80, #86efac);
+        padding: 18px 24px;
+        border-radius: 10px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .btn-create {
+        background: white;
+        color: #15803d;
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+        .btn-create:hover {
+            background: #dcfce7;
+        }
+
+    /* --- Bảng --- */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .styled-table thead {
+        background: #bbf7d0;
+    }
+
+    .styled-table th {
+        padding: 14px 12px;
+        text-align: left;
+        color: #14532d;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .styled-table td {
+        padding: 12px;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+        font-size: 15px;
+        color: #333;
+    }
+
+    .styled-table tr:hover {
+        background: #f0fdf4;
+    }
+
+    /* --- Hình ảnh --- */
+    .preview-img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .preview-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* --- Badge --- */
+    .badge {
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .badge-main {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .badge-sub {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    /* --- Thao tác --- */
+    .action-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+    .btn-action.edit {
+        background: #60a5fa;
+    }
+
+    .btn-action.details {
+        background: #34d399;
+    }
+
+    .btn-action.delete {
+        background: #f87171;
+    }
+
+    .btn-action:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    @@media (max-width: 768px) {
+        .page-container {
+            padding: 20px;
+        }
+
+        .styled-table th, .styled-table td {
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .preview-img {
+            width: 70px;
+            height: 70px;
+        }
+    }
+</style>

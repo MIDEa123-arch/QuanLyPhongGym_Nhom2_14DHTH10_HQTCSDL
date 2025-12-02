@@ -1,0 +1,229 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.HoaDon
+@{
+    ViewBag.Title = "Chi Tiết Hóa Đơn #" + Model.MaHD;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- 1. Tải thư viện html2pdf từ CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+    /* CSS riêng cho trang Hóa đơn */
+    .invoice-box {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+        background: white;
+    }
+
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    .invoice-title {
+        font-size: 40px;
+        font-weight: bold;
+        color: #0ea5e9;
+    }
+
+    .invoice-details {
+        text-align: right;
+    }
+
+    .invoice-info-grid {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .invoice-table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+        .invoice-table th {
+            background: #f0f6ff;
+            color: #0a53be;
+            padding: 10px;
+            border-bottom: 2px solid #d0e3ff;
+        }
+
+        .invoice-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-table .item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .invoice-table .total-row td {
+            border-top: 2px solid #333;
+            font-weight: bold;
+        }
+
+    .invoice-actions {
+        text-align: center;
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Khi in bằng máy in, ẩn các nút bấm đi */
+    @@media print {
+        .sidebar, .header, .invoice-actions, footer {
+            display: none !important;
+        }
+
+        .main-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .invoice-box {
+            box-shadow: none;
+            border: none;
+        }
+
+        body {
+            background: white;
+        }
+    }
+</style>
+
+<!-- Khu vực nội dung hóa đơn (Sẽ được in/xuất PDF) -->
+<div class="invoice-box" id="print-area">
+    <!-- Header Hóa Đơn -->
+    <div class="invoice-header">
+        <div>
+            <div class="invoice-title">ANCHAYNIEMPHAT</div>
+            <strong>GYM MANAGER SYSTEM</strong><br>
+            140 Đường Lê Trọng TấN, Quận Tân Phú<br>
+            TP. Hồ Chí Minh<br>
+            Hotline: 0819 497 975
+        </div>
+        <div class="invoice-details">
+            <strong>Mã Hóa Đơn: #@Model.MaHD</strong><br>
+            Ngày lập: @Model.NgayLap.ToString("dd/MM/yyyy")<br>
+            Trạng thái: <span style="color: @(Model.TrangThai=="Đã thanh toán"?"green":"red")">@Model.TrangThai</span>
+        </div>
+    </div>
+
+    <!-- Thông tin Khách hàng -->
+    <div class="invoice-info-grid">
+        <div>
+            <strong>Khách hàng:</strong><br>
+            @Model.KhachHang.TenKH<br>
+            SĐT: @Model.KhachHang.SDT<br>
+            Email: @(Model.KhachHang.Email ?? "Chưa cập nhật")
+        </div>
+    </div>
+
+    <!-- Bảng Chi tiết -->
+    <table class="invoice-table">
+        <thead>
+            <tr class="heading">
+                <th>Mặt Hàng / Dịch Vụ</th>
+                <th style="text-align: center">SL</th>
+                <th style="text-align: right">Đơn Giá</th>
+                <th style="text-align: right">Thành Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ChiTietHoaDons)
+            {
+                <tr>
+                    <td class="item-name">
+                        <!-- Logic hiển thị tên món hàng -->
+                        @if (item.MaSP != null)
+                        {<span>🥤 @item.SanPham.TenSP</span>;
+                    }
+                    else if (item.MaDKGT != null)
+                    { <span>🏋️ Gói tập: @item.DangKyGoiTap.GoiTap.TenGoi</span>;
+                }
+                else if (item.MaDKLop != null)
+                { <span>🧘 Lớp: @item.DangKyLop.LopHoc.TenLop</span>;
+            }
+            else if (item.MaDKPT != null)
+            { <span>💪 PT: @item.DangKyPT.NhanVien.TenNV (@item.DangKyPT.SoBuoi buổi)</span>;
+        }
+                    </td>
+                    <td style="text-align: center">@item.SoLuong</td>
+                    <td style="text-align: right">@item.DonGia.ToString("#,##0")</td>
+                    <td style="text-align: right">@((item.DonGia * item.SoLuong).ToString("#,##0"))</td>
+                </tr>
+            }
+        </tbody>
+        <!-- Tổng kết -->
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right; padding-top: 20px;">Tổng cộng:</td>
+                <td style="text-align: right; padding-top: 20px;">@Model.TongTien.ToString("#,##0")</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: right;">Giảm giá:</td>
+                <td style="text-align: right;">- @Model.GiamGia.ToString("#,##0")</td>
+            </tr>
+            <tr class="total-row" style="font-size: 18px; color: #d32f2f;">
+                <td colspan="3" style="text-align: right;">THÀNH TIỀN:</td>
+                <td style="text-align: right;">@Model.ThanhTien.ToString("#,##0") VNĐ</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="margin-top: 40px; text-align: center; font-style: italic; color: #888;">
+        Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!
+    </div>
+</div>
+
+<!-- Nút bấm hành động -->
+<div class="invoice-actions">
+    <button onclick="window.print()" class="btn btn-details" style="font-size: 16px;">
+        <i class="uil uil-print"></i> In Máy In
+    </button>
+
+    <!-- Nút Xuất PDF Mới -->
+    <button onclick="exportToPDF()" class="btn btn-primary" style="font-size: 16px;">
+        <i class="uil uil-file-download-alt"></i> Tải PDF
+    </button>
+
+    <a href="@Url.Action("Index")" class="btn btn-back">Quay lại</a>
+</div>
+
+<!-- Script xử lý xuất PDF -->
+<script>
+    function exportToPDF() {
+        // 1. Lấy phần tử cần in (là cái hộp hóa đơn)
+        var element = document.getElementById('print-area');
+
+        // 2. Cấu hình tùy chọn cho file PDF
+        var opt = {
+            margin:       10, // Lề (mm)
+            filename:     'HoaDon_@Model.MaHD.ToString()_' + new Date().toISOString().slice(0,10) + '.pdf', // Tên file: HoaDon_100_2024-10-20.pdf
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true }, // Scale 2 để nét hơn
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Khổ A4 dọc
+        };
+
+        // 3. Thực hiện xuất file và lưu về máy
+        // Hiển thị thông báo nhỏ (tùy chọn)
+        var originalText = document.querySelector('.btn-primary').innerHTML;
+        document.querySelector('.btn-primary').innerHTML = '<i class="uil uil-spinner-alt"></i> Đang tạo...';
+
+        html2pdf().set(opt).from(element).save().then(function(){
+             document.querySelector('.btn-primary').innerHTML = originalText;
+        });
+    }
+</script>

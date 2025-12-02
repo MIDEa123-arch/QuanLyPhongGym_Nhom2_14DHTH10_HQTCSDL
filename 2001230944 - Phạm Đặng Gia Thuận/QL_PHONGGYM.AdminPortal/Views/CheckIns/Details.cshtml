@@ -1,0 +1,133 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.CheckIn
+
+@{
+    ViewBag.Title = "Chi Tiết Check-in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .details-container {
+        max-width: 700px;
+        margin: 50px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .details-header {
+        background: #5dade2;
+        color: white;
+        padding: 22px;
+        border-radius: 10px;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+        .details-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+    .details-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid #e9ecef;
+        padding: 14px 0;
+        margin-bottom: 12px;
+    }
+
+        .details-item strong {
+            color: #1a5276;
+            font-weight: 600;
+            min-width: 200px;
+            font-size: 15px;
+        }
+
+    .details-value {
+        color: #2c3e50;
+        font-size: 15px;
+        flex: 1;
+        text-align: right;
+        word-wrap: break-word;
+    }
+
+    .details-actions {
+        margin-top: 35px;
+        text-align: right;
+    }
+
+    .btn-edit {
+        background: #5dade2;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        margin-right: 12px;
+        display: inline-block;
+    }
+
+        .btn-edit:hover {
+            background: #3498db;
+            color: white;
+        }
+
+    .btn-back {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+            color: white;
+            text-decoration: none;
+        }
+</style>
+
+<div class="details-container">
+    <div class="details-header">
+        <h2>📄 Chi Tiết Check-in</h2>
+    </div>
+
+    <div class="details-item">
+        <strong>Khách Hàng:</strong>
+        <span class="details-value">@Model.KhachHang?.TenKH</span>
+    </div>
+
+    <div class="details-item">
+        <strong>Thời Gian Vào:</strong>
+        <span class="details-value">
+            @(Model.ThoiGianVao.ToString("dd/MM/yyyy HH:mm"))
+        </span>
+    </div>
+
+    <div class="details-item">
+        <strong>Thời Gian Ra:</strong>
+        <span class="details-value">
+            @Model.ThoiGianRaFormatted
+        </span>
+
+    </div>
+
+    <div class="details-item">
+        <strong>Trạng Thái:</strong>
+        <span class="details-value">@Model.TrangThai</span>
+    </div>
+
+    <div class="details-actions">
+        @Html.ActionLink("✏️ Chỉnh Sửa", "Edit", new { id = Model.MaCheckIn }, new { @class = "btn-edit" })
+        @Html.ActionLink("⬅️ Quay Lại", "Index", null, new { @class = "btn-back" })
+    </div>
+</div>

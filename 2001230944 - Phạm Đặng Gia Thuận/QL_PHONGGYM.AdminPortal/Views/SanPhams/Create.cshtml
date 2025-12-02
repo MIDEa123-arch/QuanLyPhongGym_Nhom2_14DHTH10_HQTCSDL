@@ -1,0 +1,169 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.SanPham
+
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .card-form {
+        background: #fff;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 40px 50px;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+
+        .card-form:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+    h2 {
+        text-align: center;
+        color: #0d47a1;
+        font-weight: 700;
+        margin-bottom: 35px;
+        letter-spacing: 0.5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #1565c0;
+    }
+
+    .form-control {
+        width: 100%;
+        border: 1px solid #bbdefb;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #2196f3;
+            box-shadow: 0 0 5px rgba(33,150,243,0.3);
+            outline: none;
+        }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #2196f3, #1976d2);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 30px;
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        transition: 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #42a5f5, #1565c0);
+            transform: translateY(-2px);
+        }
+
+    .btn-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #1565c0;
+        font-weight: 500;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .back-link:hover {
+            color: #0d47a1;
+            text-decoration: underline;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+    }
+</style>
+
+<div class="card-form">
+    <h2>🛒 Thêm sản phẩm mới</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenSP, "Tên sản phẩm")
+            @Html.TextBoxFor(model => model.TenSP, new { @class = "form-control", placeholder = "Nhập tên sản phẩm..." })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaLoaiSP, "Loại sản phẩm")
+            @Html.DropDownList("MaLoaiSP", null, "-- Chọn loại sản phẩm --", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DonGia, "Đơn giá (VNĐ)")
+            @Html.TextBoxFor(model => model.DonGia, new { @class = "form-control", placeholder = "Ví dụ: 250000" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SoLuongTon, "Số lượng tồn")
+            @Html.TextBoxFor(model => model.SoLuongTon, new { @class = "form-control", placeholder = "Nhập số lượng hiện có" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GiaKhuyenMai, "Giá khuyến mãi")
+            @Html.TextBoxFor(model => model.GiaKhuyenMai, new { @class = "form-control", placeholder = "Giá giảm (nếu có)" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Hang, "Hãng sản xuất")
+            @Html.TextBoxFor(model => model.Hang, new { @class = "form-control", placeholder = "Ví dụ: ABC Fitness" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.XuatXu, "Xuất xứ")
+            @Html.TextBoxFor(model => model.XuatXu, new { @class = "form-control", placeholder = "Ví dụ: Việt Nam" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BaoHanh, "Bảo hành")
+            @Html.TextBoxFor(model => model.BaoHanh, new { @class = "form-control", placeholder = "6 tháng / 1 năm..." })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTaChung, "Mô tả chung")
+            @Html.TextAreaFor(model => model.MoTaChung, new { @class = "form-control", rows = 3, placeholder = "Thông tin tổng quan về sản phẩm..." })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTaChiTiet, "Mô tả chi tiết")
+            @Html.TextAreaFor(model => model.MoTaChiTiet, new { @class = "form-control", rows = 4, placeholder = "Chi tiết kỹ thuật, công dụng..." })
+        </div>
+
+        <div class="btn-container">
+            <input type="submit" value="➕ Thêm sản phẩm" class="btn btn-primary" />
+        </div>
+    }
+
+    <div class="text-center">
+        @Html.ActionLink("← Quay lại danh sách", "Index", null, new { @class = "back-link" })
+    </div>
+</div>
