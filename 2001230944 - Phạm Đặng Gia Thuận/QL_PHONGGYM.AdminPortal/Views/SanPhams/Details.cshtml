@@ -1,0 +1,317 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.SanPham
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-custom">
+    <div class="page-header">
+        <h2>Chi Tiết Sản Phẩm</h2>
+    </div>
+
+    <!-- ✅ Bộ sưu tập hình ảnh -->
+    <h3 class="section-title">Bộ Sưu Tập Hình Ảnh</h3>
+
+    @if (Model.HINHANHs != null && Model.HINHANHs.Any())
+    {
+        <div class="gallery">
+            @foreach (var hinh in Model.HINHANHs)
+            {
+                <div class="gallery-item">
+                    <img src="@Url.Content("~/Content/Images/" + hinh.Url)" alt="@Model.TenSP" />
+                    @if (hinh.IsMain == true)
+                    {
+                        <span class="main-badge">Ảnh chính</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-image-text">Sản phẩm này chưa có hình ảnh nào.</p>
+    }
+
+    <!-- ======================================================= -->
+    <div class="details-container">
+        <h4 class="info-title">Thông Tin Sản Phẩm</h4>
+
+        <dl class="info-list">
+            <div class="info-item">
+                <dt class="info-label">Tên sản phẩm:</dt>
+                <dd class="info-value"><strong>@Model.TenSP</strong></dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Loại sản phẩm:</dt>
+                <dd class="info-value">@Model.LoaiSanPham.TenLoaiSP</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Đơn giá:</dt>
+                <dd class="info-value"><span class="price">@String.Format("{0:N0} đ", Model.DonGia)</span></dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Giá khuyến mãi:</dt>
+                <dd class="info-value">
+                    @if (Model.GiaKhuyenMai.HasValue)
+                    {
+                        <span class="price">@String.Format("{0:N0} đ", Model.GiaKhuyenMai)</span>
+                    }
+                    else
+                    {
+                        <span>-</span>
+                    }
+                </dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Số lượng tồn:</dt>
+                <dd class="info-value"><span class="stock-badge">@Model.SoLuongTon</span></dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Hãng:</dt>
+                <dd class="info-value">@Model.Hang</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Xuất xứ:</dt>
+                <dd class="info-value">@Model.XuatXu</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Bảo hành:</dt>
+                <dd class="info-value">@Model.BaoHanh</dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Mô tả chung:</dt>
+                <dd class="info-value"><div class="description-box">@Model.MoTaChung</div></dd>
+            </div>
+
+            <div class="info-item">
+                <dt class="info-label">Mô tả chi tiết:</dt>
+                <dd class="info-value"><div class="description-box">@Model.MoTaChiTiet</div></dd>
+            </div>
+        </dl>
+
+        <div class="button-group">
+            @Html.ActionLink("Chỉnh Sửa", "Edit", new { id = Model.MaSP }, new { @class = "btn-edit" })
+            @Html.ActionLink("Quay Lại", "Index", null, new { @class = "btn-back" })
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- BỐ CỤC CHUNG --- */
+    body {
+        background-color: #eef5ff;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .container-custom {
+        padding: 40px 20px;
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: linear-gradient(90deg, #60a5fa, #93c5fd);
+        padding: 24px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        text-align: center;
+    }
+
+    .page-header h2 {
+        color: white;
+        margin: 0;
+        font-weight: 600;
+        font-size: 24px;
+    }
+
+    /* --- GALLERY --- */
+    .section-title {
+        color: #1e3a8a;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 40px;
+        padding: 0 10px;
+    }
+
+    .gallery-item {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #f9fafb;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .main-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background: #3b82f6;
+        color: white;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .no-image-text {
+        text-align: center;
+        color: #6b7280;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
+
+    /* --- THÔNG TIN SẢN PHẨM --- */
+    .details-container {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .info-title {
+        color: #2563eb;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #bfdbfe;
+    }
+
+    .info-item {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #475569;
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .info-value {
+        color: #1e293b;
+        flex: 1;
+    }
+
+    .price {
+        color: #dc2626;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .stock-badge {
+        background: #dcfce7;
+        color: #166534;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .description-box {
+        background: #f8fafc;
+        padding: 12px;
+        border-radius: 6px;
+        line-height: 1.6;
+        color: #374151;
+    }
+
+    /* --- NÚT --- */
+    .button-group {
+        margin-top: 25px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .btn-edit {
+        background: #3b82f6;
+        color: white;
+        padding: 10px 22px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+    .btn-edit:hover {
+        background: #2563eb;
+    }
+
+    .btn-back {
+        background: #9ca3af;
+        color: white;
+        padding: 10px 22px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+    .btn-back:hover {
+        background: #6b7280;
+    }
+
+    /* --- RESPONSIVE --- */
+    @@media (max-width: 768px) {
+        .gallery {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        }
+
+        .gallery-item img {
+            height: 120px;
+        }
+
+        .info-item {
+            flex-direction: column;
+        }
+
+        .info-label {
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>

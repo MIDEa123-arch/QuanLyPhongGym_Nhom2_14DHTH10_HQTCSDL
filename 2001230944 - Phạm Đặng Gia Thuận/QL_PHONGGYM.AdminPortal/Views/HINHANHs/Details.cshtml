@@ -1,0 +1,183 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.HINHANH
+
+@{
+    ViewBag.Title = "Chi tiết hình ảnh sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-container">
+    <div class="page-header details-header">
+        <h2>📸 Chi tiết hình ảnh sản phẩm</h2>
+        @Html.ActionLink("⬅ Quay lại danh sách", "Index", null, new { @class = "btn-back" })
+    </div>
+
+    <div class="details-body">
+        <div class="detail-item">
+            <label>Sản phẩm:</label>
+            <p>@(Model.SanPham != null ? Model.SanPham.TenSP : "Không xác định")</p>
+        </div>
+
+        <div class="detail-item">
+            <label>Đường dẫn hình ảnh:</label>
+            <p>@Html.DisplayFor(model => model.Url)</p>
+        </div>
+
+        <div class="detail-item">
+            @if ((bool)(Model.IsMain ?? false))
+            {
+                <span>Ảnh chính</span>
+            }
+
+        </div>
+
+        <div class="preview-box">
+            <label>Ảnh xem trước:</label>
+            <img src="@Url.Content("~/Content/Images/" + Model.Url)" alt="Ảnh sản phẩm" />
+        </div>
+
+        <div class="form-actions">
+            @Html.ActionLink("✏ Chỉnh sửa", "Edit", new { id = Model.MaHinh }, new { @class = "btn-edit" })
+            @Html.ActionLink("⬅ Quay lại", "Index", null, new { @class = "btn-cancel" })
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .page-container {
+        max-width: 700px;
+        margin: 70px auto;
+        background: white;
+        border-radius: 14px;
+        padding: 35px 45px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        padding: 14px 22px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background: white;
+        color: #2563eb;
+        padding: 8px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: 0.2s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .btn-back:hover {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+    .details-body {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 25px 30px;
+    }
+
+    .detail-item {
+        margin-bottom: 18px;
+    }
+
+        .detail-item label {
+            font-weight: 600;
+            color: #1e3a8a;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .detail-item p {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin: 0;
+            font-size: 15px;
+            color: #111827;
+        }
+
+    .preview-box {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .preview-box label {
+            font-weight: 600;
+            color: #1e3a8a;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .preview-box img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            object-fit: contain;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 30px;
+    }
+
+    .btn-edit {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+        .btn-edit:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+    .btn-cancel {
+        background: #9ca3af;
+        color: white;
+        text-decoration: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+        .btn-cancel:hover {
+            background: #6b7280;
+            transform: translateY(-2px);
+        }
+</style>

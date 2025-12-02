@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null; // Không dùng Layout
+    ViewBag.Title = "Đăng nhập";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!-- Tải CSS từ thư mục Content -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <!-- Tải thư viện icon (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="login-body">
+
+    <div class="login-container">
+        <form method="post" action="@Url.Action("Authenticate", "Login")">
+            <!-- Thêm Token chống tấn công CSRF -->
+            @Html.AntiForgeryToken()
+
+            <!-- Thêm Logo Icon -->
+            <div class="login-logo">
+                <i data-lucide="dumbbell"></i>
+            </div>
+
+            <h2>Đăng Nhập</h2>
+            <p>Admin Portal (Nhân viên & Quản lý)</p>
+
+            <div class="input-group">
+                <label for="username">Tên đăng nhập SQL</label>
+                <input type="text" id="username" name="username" placeholder="GymManagerLogin hoặc GymStaffLogin" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-button">Đăng Nhập</button>
+
+            <!-- Hiển thị thông báo lỗi (nếu có) -->
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="error-message">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+        </form>
+    </div>
+
+    <script>
+        // Khởi tạo icon vừa thêm
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

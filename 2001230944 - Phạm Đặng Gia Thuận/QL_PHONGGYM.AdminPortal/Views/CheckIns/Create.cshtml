@@ -1,0 +1,143 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.CheckIn
+
+@{
+    ViewBag.Title = "Thêm Check-in Mới";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .create-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 40px 50px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .create-header {
+        background: #5dade2;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+        .create-header h2 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 24px;
+        }
+
+    label {
+        font-weight: 600;
+        color: #1a5276;
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #d6eaf8;
+        padding: 10px;
+        transition: border-color 0.3s;
+        width: 100%;
+    }
+
+        .form-control:focus {
+            border-color: #5dade2;
+            box-shadow: 0 0 5px rgba(93,173,226,0.3);
+        }
+
+    .text-danger {
+        color: #e74c3c;
+        font-size: 13px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .btn-save {
+        background: #5dade2;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-right: 10px;
+    }
+
+        .btn-save:hover {
+            background: #3498db;
+            color: white;
+        }
+
+    .btn-cancel {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+        .btn-cancel:hover {
+            background: #7f8c8d;
+            color: white;
+        }
+
+    .form-actions {
+        text-align: right;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="create-container">
+    <div class="create-header">
+        <h2>➕ Thêm Check-in Mới</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaKH, "Khách Hàng")
+            @Html.DropDownList("MaKH", null, "-- Chọn khách hàng --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThoiGianVao, "Thời Gian Vào")
+            @Html.TextBoxFor(model => model.ThoiGianVao, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.ThoiGianVao, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThoiGianRa, "Thời Gian Ra")
+            @Html.TextBoxFor(model => model.ThoiGianRa, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(model => model.ThoiGianRa, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TrangThai, "Trạng Thái")
+            @Html.EditorFor(model => model.TrangThai, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="💾 Lưu" class="btn-save" />
+            @Html.ActionLink("⬅️ Hủy", "Index", null, new { @class = "btn-cancel" })
+        </div>
+    }
+</div>

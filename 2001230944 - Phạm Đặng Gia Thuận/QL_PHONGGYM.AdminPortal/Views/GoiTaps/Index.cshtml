@@ -1,0 +1,210 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.GoiTap>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container-custom {
+        padding: 30px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: #5dade2;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .page-header h2 {
+        color: white;
+        margin: 0;
+        font-weight: 500;
+        font-size: 26px;
+    }
+
+    .btn-create {
+        background: #5dade2;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-block;
+        transition: all 0.3s;
+        border: none;
+    }
+
+    .btn-create:hover {
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        margin: 0;
+        border-collapse: collapse;
+    }
+
+    .table thead {
+        background: #5dade2;
+    }
+
+    .table thead th {
+        color: white;
+        font-weight: 500;
+        padding: 15px;
+        border: none;
+        text-align: left;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid #e9ecef;
+        transition: all 0.3s;
+    }
+
+    .table tbody tr:hover {
+        background: #f0f8ff;
+    }
+
+    .table tbody td {
+        padding: 15px;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+    .table tbody td:first-child {
+        font-weight: 600;
+    }
+
+    .table tbody td:last-child {
+        white-space: normal;
+    }
+
+    .action-links a {
+        padding: 6px 15px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-block;
+        margin: 2px;
+    }
+
+    .action-links .btn-edit {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .action-links .btn-edit:hover {
+        background: #45a049;
+    }
+
+    .action-links .btn-details {
+        background: #2196F3;
+        color: white;
+    }
+
+    .action-links .btn-details:hover {
+        background: #0b7dda;
+    }
+
+    .action-links .btn-delete {
+        background: #f44336;
+        color: white;
+    }
+
+    .action-links .btn-delete:hover {
+        background: #da190b;
+    }
+
+    .price {
+        color: #e74c3c;
+        font-weight: 600;
+    }
+
+    @@media (max-width: 768px) {
+        .container-custom {
+            padding: 20px;
+        }
+
+        .table-container {
+            padding: 15px;
+        }
+
+        .page-header {
+            padding: 20px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+    }
+</style>
+
+<div class="container-custom">
+    <div class="page-header">
+        <h2>💪 Quản Lý Gói Tập</h2>
+    </div>
+
+    <p style="margin-bottom: 20px;">
+        @Html.ActionLink("➕ Thêm Gói Tập Mới", "Create", null, new { @class = "btn-create" })
+    </p>
+
+    <div class="table-container">
+        <table class="table">
+            <tr>
+                <th>
+                    Tên Gói
+                </th>
+                <th>
+                    Thời Hạn
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Mô Tả
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenGoi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ThoiHan)
+                    </td>
+                    <td>
+                        <span class="price">@Html.DisplayFor(modelItem => item.Gia)</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MoTa)
+                    </td>
+                    <td class="action-links">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaGoiTap }, new { @class = "btn-edit" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaGoiTap }, new { @class = "btn-details" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaGoiTap }, new { @class = "btn-delete" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

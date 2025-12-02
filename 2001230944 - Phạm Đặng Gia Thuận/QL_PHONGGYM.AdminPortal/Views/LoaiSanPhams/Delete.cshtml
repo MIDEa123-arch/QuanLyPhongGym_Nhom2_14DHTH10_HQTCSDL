@@ -1,0 +1,148 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LoaiSanPham
+
+@{
+    ViewBag.Title = "Xóa loại sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h2>Xóa loại sản phẩm</h2>
+        @Html.ActionLink("← Quay lại danh sách", "Index", null, new { @class = "btn-back" })
+    </div>
+
+    <div class="delete-card">
+        <p class="warning-text">Bạn có chắc chắn muốn xóa loại sản phẩm sau không?</p>
+        <dl>
+            <dt>Tên loại sản phẩm:</dt>
+            <dd>@Html.DisplayFor(model => model.TenLoaiSP)</dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions">
+                <input type="submit" value="Xóa" class="btn-delete" />
+                @Html.ActionLink("Hủy", "Index", null, new { @class = "btn-cancel" })
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* --- BỐ CỤC CHUNG --- */
+    body {
+        background-color: #eef5ff;
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .page-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #ffffff;
+        border: 1px solid #dbeafe;
+        border-radius: 10px;
+        padding: 30px 40px;
+    }
+
+    /* --- HEADER --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fee2e2;
+        color: #991b1b;
+        padding: 10px 16px;
+        border-radius: 6px;
+        margin-bottom: 24px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background: #fff;
+        color: #991b1b;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        border: 1px solid #fecaca;
+        transition: background-color 0.2s;
+    }
+
+        .btn-back:hover {
+            background: #fee2e2;
+        }
+
+    /* --- KHUNG XÁC NHẬN --- */
+    .delete-card {
+        background-color: #fff8f8;
+        border: 1px solid #fecaca;
+        border-radius: 8px;
+        padding: 24px;
+    }
+
+    .warning-text {
+        color: #b91c1c;
+        font-weight: 600;
+        margin-bottom: 16px;
+        font-size: 15px;
+    }
+
+    dt {
+        font-weight: 600;
+        color: #7f1d1d;
+        margin-bottom: 4px;
+        font-size: 15px;
+    }
+
+    dd {
+        margin: 0 0 12px 0;
+        color: #374151;
+        font-size: 14.5px;
+    }
+
+    /* --- NÚT HÀNH ĐỘNG --- */
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-delete {
+        background-color: #ef4444;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+
+    .btn-cancel {
+        background-color: #e5e7eb;
+        color: #374151;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+        .btn-cancel:hover {
+            background-color: #d1d5db;
+        }
+</style>

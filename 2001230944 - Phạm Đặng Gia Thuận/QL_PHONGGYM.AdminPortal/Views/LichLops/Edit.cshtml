@@ -1,0 +1,164 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LichLop
+
+@{
+    ViewBag.Title = "Sửa Lịch Lớp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ============================
+       STYLE MÀU XANH DƯƠNG NHẠT
+       ============================ */
+    .edit-card {
+        background: #f0f6ff;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid #d0e3ff;
+        max-width: 750px;
+        margin: 20px auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .edit-title {
+        font-size: 24px;
+        color: #0a53be;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .edit-sub {
+        font-size: 14px;
+        color: #3d6fc2;
+        margin-bottom: 18px;
+    }
+
+    .form-custom .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-custom label {
+        font-weight: 600;
+        color: #0d4ea6;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-custom .form-control {
+        border-radius: 6px;
+        border: 1px solid #c5d9ff;
+        box-shadow: none;
+        padding: 8px 10px;
+        transition: 0.2s;
+        width: 100%;
+    }
+
+        .form-custom .form-control:focus {
+            border-color: #6aa6ff;
+            box-shadow: 0 0 5px rgba(58,126,255,0.4);
+            outline: none;
+        }
+
+    .btn-save {
+        background: #0d6efd;
+        color: white !important;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: 0.2s;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+        .btn-save:hover {
+            background: #0b5ed7;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 10px;
+        transition: 0.2s;
+        display: inline-block;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    .help-text {
+        font-size: 13px;
+        color: #64748b;
+        font-style: italic;
+        margin-top: 4px;
+    }
+</style>
+
+<div class="edit-card">
+    <h2 class="edit-title">✏️ Sửa Lịch Lớp</h2>
+    <p class="edit-sub">Cập nhật thông tin lịch học. Hệ thống sẽ tự động kiểm tra trùng giờ.</p>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-custom">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <!-- Ẩn mã lịch lớp (Khóa chính) -->
+            @Html.HiddenFor(model => model.MaLichLop)
+
+            <div class="form-group">
+                <label>Lớp Học</label>
+                <!-- Dropdown chọn Lớp -->
+                @Html.DropDownList("MaLop", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaLop, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Giáo Viên (HLV)</label>
+                <!-- Dropdown chọn Giáo viên -->
+                @Html.DropDownList("MaNV", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                <div class="help-text">* Chọn "Mặc định" để lấy giáo viên chủ nhiệm của lớp đó.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Ngày Học</label>
+                <!-- Format yyyy-MM-dd để hiển thị đúng trong input date -->
+                @Html.TextBoxFor(model => model.NgayHoc, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(model => model.NgayHoc, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <label>Giờ Bắt Đầu</label>
+                <!-- Format hh:mm để hiển thị đúng trong input time -->
+                @Html.TextBoxFor(model => model.GioBatDau, "{0:hh\\:mm}", new { @class = "form-control", type = "time" })
+                @Html.ValidationMessageFor(model => model.GioBatDau, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label>Giờ Kết Thúc</label>
+                @Html.TextBoxFor(model => model.GioKetThuc, "{0:hh\\:mm}", new { @class = "form-control", type = "time" })
+                @Html.ValidationMessageFor(model => model.GioKetThuc, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- ĐÃ XÓA INPUT TRẠNG THÁI -->
+
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-save">
+                    <i class="uil uil-save"></i> Lưu Thay Đổi
+                </button>
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn-back" })
+            </div>
+        </div>
+    }
+</div>

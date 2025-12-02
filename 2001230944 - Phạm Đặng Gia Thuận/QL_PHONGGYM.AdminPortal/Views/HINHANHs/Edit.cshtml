@@ -1,0 +1,216 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.HINHANH
+
+@{
+    ViewBag.Title = "Chỉnh sửa hình ảnh sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-container">
+    <div class="page-header edit-header">
+        <h2>🖼️ Chỉnh sửa hình ảnh sản phẩm</h2>
+        @Html.ActionLink("⬅ Quay lại danh sách", "Index", null, new { @class = "btn-back" })
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaHinh)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaSP, "Sản phẩm", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("MaSP", null, htmlAttributes: new { @class = "form-control input-box" })
+                @Html.ValidationMessageFor(model => model.MaSP, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Url, "Đường dẫn hình ảnh", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @class = "form-control input-box", placeholder = "Nhập tên file hình, ví dụ: sp1.jpg" } })
+                @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+                <!-- Xem trước ảnh -->
+                <div class="preview-box">
+                    <p>Xem trước:</p>
+                    <img id="previewImage" src="@Url.Content("~/Content/Images/" + Model.Url)" alt="Ảnh xem trước" />
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="control-label">Ảnh chính:</label>
+                <div>
+                    @Html.EditorFor(model => model.IsMain)
+                    @Html.ValidationMessageFor(model => model.IsMain, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="💾 Lưu thay đổi" class="btn-save" />
+                @Html.ActionLink("Hủy", "Index", null, new { @class = "btn-cancel" })
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .page-container {
+        max-width: 700px;
+        margin: 70px auto;
+        background: white;
+        border-radius: 14px;
+        padding: 35px 45px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        padding: 14px 22px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background: white;
+        color: #2563eb;
+        padding: 8px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        transition: 0.2s;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .btn-back:hover {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+    .form-body {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 25px 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: 600;
+        color: #1e3a8a;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .input-box {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 15px;
+        transition: 0.2s;
+    }
+
+        .input-box:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px #bfdbfe;
+            outline: none;
+        }
+
+    .text-danger {
+        color: #dc2626;
+        font-size: 14px;
+    }
+
+    .preview-box {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+        .preview-box img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-top: 8px;
+            object-fit: contain;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+    }
+
+    .btn-save {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .btn-save:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+    .btn-cancel {
+        background: #9ca3af;
+        color: white;
+        text-decoration: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+        .btn-cancel:hover {
+            background: #6b7280;
+            transform: translateY(-2px);
+        }
+</style>
+
+<script>
+    // Xem trước ảnh khi thay đổi URL
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.querySelector("#Url");
+        const img = document.querySelector("#previewImage");
+        if (input && img) {
+            input.addEventListener("input", function () {
+                img.src = "/Content/Images/" + this.value;
+            });
+        }
+    });
+</script>

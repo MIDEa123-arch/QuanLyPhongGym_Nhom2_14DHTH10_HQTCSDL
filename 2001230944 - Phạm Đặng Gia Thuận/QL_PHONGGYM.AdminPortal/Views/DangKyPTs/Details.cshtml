@@ -1,0 +1,96 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.DangKyPT
+
+@{
+    ViewBag.Title = "Chi Tiết Đăng Ký PT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .details-card {
+        background: #f0f6ff;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid #d0e3ff;
+        max-width: 750px;
+        margin: 25px auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .details-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #0a53be;
+        margin-bottom: 10px;
+    }
+
+    .details-table dt {
+        font-weight: 600;
+        color: #0d4ea6;
+        width: 160px;
+        padding: 8px 0;
+    }
+
+    .details-table dd {
+        margin-left: 180px;
+        padding: 8px 0;
+        color: #00315c;
+        font-weight: 500;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+        .btn-edit:hover {
+            background: #0069d9;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-left: 8px;
+        transition: 0.2s;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+</style>
+
+<div class="details-card">
+    <div class="details-title">📌 Chi Tiết Đăng Ký PT</div>
+    <hr />
+
+    <dl class="details-table dl-horizontal">
+        <dt>Khách hàng</dt>
+        <dd>@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
+
+        <dt>Nhân viên PT</dt>
+        <dd>@Html.DisplayFor(model => model.NhanVien.TenDangNhap)</dd>
+
+        <dt>Số buổi</dt>
+        <dd>@Html.DisplayFor(model => model.SoBuoi)</dd>
+
+        <dt>Giá mỗi buổi</dt>
+        <dd>@Html.DisplayFor(model => model.GiaMoiBuoi)</dd>
+
+        <dt>Ngày đăng ký</dt>
+        <dd>@Html.DisplayFor(model => model.NgayDangKy)</dd>
+
+        <dt>Trạng thái</dt>
+        <dd>@Html.DisplayFor(model => model.TrangThai)</dd>
+    </dl>
+
+    <div style="margin-top: 20px;">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.MaDKPT }, new { @class = "btn-edit" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn-back" })
+    </div>
+</div>

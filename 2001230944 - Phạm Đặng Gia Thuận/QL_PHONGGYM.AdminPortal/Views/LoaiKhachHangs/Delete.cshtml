@@ -1,0 +1,144 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.LoaiKhachHang
+
+@{
+    ViewBag.Title = "Xóa loại khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2>Xóa loại khách hàng</h2>
+    <a href="@Url.Action("Index", "LoaiKhachHangs")" class="btn-back">← Quay lại danh sách</a>
+</div>
+
+<div class="delete-container">
+    <p class="warning-text">Bạn có chắc chắn muốn xóa loại khách hàng này không?</p>
+
+    <table class="details-table">
+        <tr>
+            <th>Tên loại</th>
+            <td>@Html.DisplayFor(model => model.TenLoai)</td>
+        </tr>
+        <tr>
+            <th>Mức giảm (%)</th>
+            <td>@Html.DisplayFor(model => model.MucGiam)</td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="delete-actions">
+            <input type="submit" value="Xóa" class="btn-action delete" />
+            <a href="@Url.Action("Index")" class="btn-action cancel">Hủy</a>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f2f7ff;
+        font-family: "Segoe UI", sans-serif;
+        color: #1e293b;
+        margin: 20px;
+    }
+
+    /* --- HEADER --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #dbeafe;
+        color: #1e3a8a;
+        padding: 12px 20px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-back {
+        background-color: #3b82f6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+        .btn-back:hover {
+            background-color: #2563eb;
+        }
+
+    /* --- KHUNG CHÍNH --- */
+    .delete-container {
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .warning-text {
+        color: #b91c1c;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .details-table th {
+            text-align: left;
+            width: 150px;
+            color: #1e3a8a;
+            padding: 8px 0;
+            font-weight: 600;
+        }
+
+        .details-table td {
+            padding: 8px 0;
+            color: #374151;
+        }
+
+    /* --- NÚT HÀNH ĐỘNG --- */
+    .delete-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-action {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: white;
+        transition: background-color 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn-action.delete {
+            background-color: #ef4444;
+        }
+
+            .btn-action.delete:hover {
+                background-color: #dc2626;
+            }
+
+        .btn-action.cancel {
+            background-color: #6b7280;
+        }
+
+            .btn-action.cancel:hover {
+                background-color: #4b5563;
+            }
+</style>

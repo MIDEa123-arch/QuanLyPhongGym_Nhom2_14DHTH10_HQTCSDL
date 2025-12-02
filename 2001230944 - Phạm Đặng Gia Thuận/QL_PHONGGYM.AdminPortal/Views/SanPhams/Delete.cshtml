@@ -1,0 +1,155 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.SanPham
+
+@{
+    ViewBag.Title = "Xóa sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        font-family: "Segoe UI", sans-serif;
+    }
+
+    .card-delete {
+        background: #fff;
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 40px 50px;
+        border-radius: 16px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        transition: 0.3s;
+        text-align: center;
+    }
+
+        .card-delete:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+    h2 {
+        color: #0d47a1;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #d32f2f;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    dl {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    dt {
+        color: #1565c0;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    dd {
+        margin-left: 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e3f2fd;
+        padding-bottom: 6px;
+    }
+
+    .btn-danger {
+        background: linear-gradient(90deg, #e53935, #c62828);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-danger:hover {
+            background: linear-gradient(90deg, #ef5350, #b71c1c);
+            transform: translateY(-2px);
+        }
+
+    .btn-secondary {
+        background: linear-gradient(90deg, #42a5f5, #1e88e5);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background: linear-gradient(90deg, #64b5f6, #1565c0);
+            transform: translateY(-2px);
+        }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .product-summary {
+        background: #f5faff;
+        border: 1px solid #bbdefb;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+        .product-summary strong {
+            color: #0d47a1;
+        }
+</style>
+
+<div class="card-delete">
+    <h2>🗑️ Xóa sản phẩm</h2>
+    <h3>Bạn có chắc muốn xóa sản phẩm này?</h3>
+
+    <div class="product-summary">
+        <dl>
+            <dt>Loại sản phẩm</dt>
+            <dd>@Html.DisplayFor(model => model.LoaiSanPham.TenLoaiSP)</dd>
+
+            <dt>Tên sản phẩm</dt>
+            <dd><strong>@Html.DisplayFor(model => model.TenSP)</strong></dd>
+
+            <dt>Đơn giá</dt>
+            <dd>@Html.DisplayFor(model => model.DonGia)</dd>
+
+            <dt>Số lượng tồn</dt>
+            <dd>@Html.DisplayFor(model => model.SoLuongTon)</dd>
+
+            <dt>Giá khuyến mãi</dt>
+            <dd>@Html.DisplayFor(model => model.GiaKhuyenMai)</dd>
+
+            <dt>Hãng</dt>
+            <dd>@Html.DisplayFor(model => model.Hang)</dd>
+
+            <dt>Xuất xứ</dt>
+            <dd>@Html.DisplayFor(model => model.XuatXu)</dd>
+
+            <dt>Bảo hành</dt>
+            <dd>@Html.DisplayFor(model => model.BaoHanh)</dd>
+
+            <dt>Mô tả chung</dt>
+            <dd>@Html.DisplayFor(model => model.MoTaChung)</dd>
+
+            <dt>Mô tả chi tiết</dt>
+            <dd>@Html.DisplayFor(model => model.MoTaChiTiet)</dd>
+        </dl>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="btn-container">
+            <input type="submit" value="Xóa sản phẩm" class="btn btn-danger" />
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

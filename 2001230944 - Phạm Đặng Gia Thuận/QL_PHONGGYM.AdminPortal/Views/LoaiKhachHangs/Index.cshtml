@@ -1,0 +1,136 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LoaiKhachHang>
+
+@{
+    ViewBag.Title = "Loại khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h2>Danh sách loại khách hàng</h2>
+    <a href="@Url.Action("Create", "LoaiKhachHangs")" class="btn-create">+ Thêm loại mới</a>
+</div>
+
+<table class="table-custom">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.MaLoaiKH)</th>
+            <th>@Html.DisplayNameFor(model => model.TenLoai)</th>
+            <th>@Html.DisplayNameFor(model => model.MucGiam)</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaLoaiKH)</td>
+                <td>@Html.DisplayFor(modelItem => item.TenLoai)</td>
+                <td>@Html.DisplayFor(modelItem => item.MucGiam)</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.MaLoaiKH })" class="btn-action edit">Sửa</a>
+                    <a href="@Url.Action("Details", new { id = item.MaLoaiKH })" class="btn-action details">Chi tiết</a>
+                    <a href="@Url.Action("Delete", new { id = item.MaLoaiKH })" class="btn-action delete">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    /* --- TOÀN TRANG --- */
+    body {
+        background-color: #f2f7ff; /* Xanh dương rất nhạt */
+        font-family: "Segoe UI", sans-serif;
+        color: #1e293b;
+        margin: 20px;
+    }
+
+    /* --- TIÊU ĐỀ TRANG --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        background-color: #dbeafe; /* Xanh dương nhạt dịu */
+        color: #1e3a8a;
+        padding: 12px 20px;
+        border-radius: 6px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-create {
+        background-color: #3b82f6;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+    }
+
+        .btn-create:hover {
+            background-color: #2563eb;
+        }
+
+    /* --- BẢNG DỮ LIỆU --- */
+    .table-custom {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+    }
+
+        .table-custom th {
+            background-color: #bfdbfe;
+            color: #1e3a8a;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .table-custom td {
+            padding: 8px 10px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .table-custom tr:hover {
+            background-color: #eff6ff;
+        }
+
+    /* --- NÚT HÀNH ĐỘNG --- */
+    .btn-action {
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        margin-right: 4px;
+        transition: background-color 0.2s;
+        color: white;
+    }
+
+        .btn-action.edit {
+            background-color: #3b82f6;
+        }
+
+        .btn-action.details {
+            background-color: #2563eb;
+        }
+
+        .btn-action.delete {
+            background-color: #ef4444;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+</style>

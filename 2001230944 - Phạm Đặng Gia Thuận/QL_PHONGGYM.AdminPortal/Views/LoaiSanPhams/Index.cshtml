@@ -1,0 +1,170 @@
+﻿@model IEnumerable<QL_PHONGGYM.AdminPortal.Models.LoaiSanPham>
+
+@{
+    ViewBag.Title = "Loại sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h2>Danh sách loại sản phẩm</h2>
+        @Html.ActionLink("+ Thêm loại sản phẩm", "Create", null, new { @class = "btn-create" })
+    </div>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.TenLoaiSP)</th>
+                <th style="width: 180px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TenLoaiSP)</td>
+                    <td class="actions">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.MaLoaiSP }, new { @class = "btn-action edit" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaLoaiSP }, new { @class = "btn-action details" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaLoaiSP }, new { @class = "btn-action delete" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* --- GIAO DIỆN CHUNG --- */
+    body {
+        background-color: #f2f7ff;
+        font-family: "Segoe UI", sans-serif;
+        color: #1e293b;
+    }
+
+    /* --- KHUNG CHÍNH --- */
+    .page-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 24px 28px;
+    }
+
+    /* --- TIÊU ĐỀ --- */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #dbeafe;
+        color: #1e3a8a;
+        padding: 12px 18px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+    .btn-create {
+        background-color: #3b82f6;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.2s;
+    }
+
+        .btn-create:hover {
+            background-color: #2563eb;
+        }
+
+    /* --- BẢNG --- */
+    .table-custom {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #e5e7eb;
+    }
+
+        .table-custom th {
+            background-color: #bfdbfe;
+            color: #1e3a8a;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .table-custom td {
+            padding: 10px 12px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .table-custom tr:hover {
+            background-color: #eff6ff;
+        }
+
+    /* --- CỘT THAO TÁC --- */
+    .actions {
+        display: flex;
+        gap: 6px; /* tạo khoảng cách giữa các nút */
+        flex-wrap: wrap; /* tự xuống dòng nếu không đủ chỗ */
+    }
+
+    /* --- NÚT HÀNH ĐỘNG --- */
+    .btn-action {
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        transition: background-color 0.2s;
+        color: white;
+        text-align: center;
+        min-width: 60px;
+    }
+
+        .btn-action.edit {
+            background-color: #3b82f6;
+        }
+
+        .btn-action.details {
+            background-color: #2563eb;
+        }
+
+        .btn-action.delete {
+            background-color: #ef4444;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+
+    /* --- RESPONSIVE --- */
+    @@media (max-width: 768px) {
+        .page-container {
+            padding: 16px;
+        }
+
+        .table-custom th, .table-custom td {
+            font-size: 13px;
+        }
+
+        .btn-create {
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+
+        .actions {
+            flex-direction: column;
+            gap: 4px;
+        }
+    }
+</style>

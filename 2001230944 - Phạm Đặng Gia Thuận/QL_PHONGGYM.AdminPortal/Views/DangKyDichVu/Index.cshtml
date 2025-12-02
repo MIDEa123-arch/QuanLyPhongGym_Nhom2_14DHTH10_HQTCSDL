@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Đăng Ký Dịch Vụ";
+    var khachHangList = (SelectList)ViewBag.MaKH;
+    var goiTapList = (SelectList)ViewBag.MaGoiTap;
+    var lopHocList = (SelectList)ViewBag.MaLop;
+    var ptList = (SelectList)ViewBag.MaNV;
+
+    var alertMessage = TempData["AlertMessage"] as string;
+    var alertStatus = TempData["AlertStatus"] as string;
+}
+
+<style>
+    .content-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 25px 30px;
+        margin-top: 30px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        border-left: 6px solid #5dade2;
+    }
+
+    .page-title-in-card {
+        font-size: 22px;
+        font-weight: 600;
+        color: #2471a3;
+        margin-bottom: 10px;
+    }
+
+    .page-description {
+        font-size: 14px;
+        color: #566573;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #1a5276;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccd1d1;
+        height: 40px;
+        padding-left: 10px;
+        transition: 0.25s;
+    }
+
+        .form-control:focus {
+            border-color: #5dade2;
+            box-shadow: 0 0 6px rgba(93,173,226,0.5);
+        }
+
+    .form-actions {
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background: #5dade2;
+        border: none;
+        padding: 10px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+        .btn-primary:hover {
+            background: #3498db;
+        }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+    }
+</style>
+
+
+@if (!string.IsNullOrEmpty(alertMessage))
+{
+    string alertClass = (alertStatus == "success") ? "alert-success"
+                       : (alertStatus == "warning") ? "alert-warning"
+                       : "alert-danger";
+
+    <div class="alert @alertClass">
+        <h4>Thông báo</h4>
+        <p>@alertMessage</p>
+    </div>
+}
+
+<!-- ==================== FORM 1: GÓI TẬP ==================== -->
+<div class="content-card">
+    <h2 class="page-title-in-card">1. Đăng Ký Gói Tập (Dịch vụ)</h2>
+    <p class="page-description">Chọn khách hàng, gói tập và ngày bắt đầu.</p>
+
+    @using (Html.BeginForm("DangKyGoiTap", "DangKyDichVu", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Chọn Khách Hàng</label>
+            @Html.DropDownList("MaKH", khachHangList, "--- Chọn khách hàng ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Chọn Gói Tập</label>
+            @Html.DropDownList("MaGoiTap", goiTapList, "--- Chọn gói tập ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Ngày Bắt Đầu</label>
+            <input type="date" name="NgayBatDau" class="form-control"
+                   value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary">
+                <i class="uil uil-check-circle"></i> Đăng ký Gói Tập
+            </button>
+        </div>
+    }
+</div>
+
+<!-- ==================== FORM 2: LỚP HỌC ==================== -->
+<div class="content-card">
+    <h2 class="page-title-in-card">2. Đăng Ký Lớp Học (Dịch vụ)</h2>
+    <p class="page-description">Chọn khách hàng và lớp học muốn tham gia.</p>
+
+    @using (Html.BeginForm("DangKyLop", "DangKyDichVu", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Chọn Khách Hàng</label>
+            @Html.DropDownList("MaKH_Lop", khachHangList, "--- Chọn khách hàng ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Chọn Lớp Học (Còn hạn)</label>
+            @Html.DropDownList("MaLop", lopHocList, "--- Chọn lớp học ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary">
+                <i class="uil uil-users-alt"></i> Đăng ký Lớp Học
+            </button>
+        </div>
+    }
+</div>
+
+<!-- ==================== FORM 3: PT ==================== -->
+<div class="content-card">
+    <h2 class="page-title-in-card">3. Đăng Ký PT (1-kèm-1)</h2>
+    <p class="page-description">Chọn khách hàng, PT, số buổi và giá.</p>
+
+    @using (Html.BeginForm("DangKyPT", "DangKyDichVu", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Chọn Khách Hàng</label>
+            @Html.DropDownList("MaKH_PT", khachHangList, "--- Chọn khách hàng ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Huấn Luyện Viên (PT)</label>
+            @Html.DropDownList("MaNV", ptList, "--- Chọn PT ---",
+               new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Số Buổi</label>
+            <input type="number" name="SoBuoi" class="form-control"
+                   value="10" min="1" required />
+        </div>
+
+        <div class="form-group">
+            <label>Giá Mỗi Buổi (VNĐ)</label>
+            <input type="number" name="GiaMoiBuoi" class="form-control"
+                   value="500000" step="10000" required />
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary">
+                <i class="uil uil-user-md"></i> Đăng ký PT
+            </button>
+        </div>
+    }
+</div>

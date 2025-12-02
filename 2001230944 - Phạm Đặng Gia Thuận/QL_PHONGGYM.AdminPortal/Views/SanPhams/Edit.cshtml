@@ -1,0 +1,238 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.SanPham
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container-custom {
+        padding: 30px;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        background: #5dade2;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .page-header h2 {
+        color: white;
+        margin: 0;
+        font-weight: 500;
+        font-size: 26px;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-title {
+        color: #5dade2;
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #5dade2;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #5dade2;
+        box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.1);
+    }
+
+    textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-save {
+        background: #5dade2;
+        color: white;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-save:hover {
+        background: #3498db;
+    }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s;
+        margin-top: 15px;
+    }
+
+    .btn-back:hover {
+        background: #5a6268;
+        color: white;
+        text-decoration: none;
+    }
+
+    .button-group {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .form-container {
+            padding: 20px;
+        }
+
+        .page-header {
+            padding: 20px;
+        }
+
+        .page-header h2 {
+            font-size: 22px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="container-custom">
+    <div class="page-header">
+        <h2>Chỉnh Sửa Thông Tin Sản Phẩm</h2>
+    </div>
+
+    <div class="form-container">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.MaSP)
+
+            <h4 class="form-title">Thông Tin Sản Phẩm</h4>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenSP, "Tên sản phẩm")
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên sản phẩm" } })
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaLoaiSP, "Loại sản phẩm")
+                @Html.DropDownList("MaLoaiSP", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaLoaiSP, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonGia, "Đơn giá")
+                    @Html.EditorFor(model => model.DonGia, new { htmlAttributes = new { @class = "form-control", type = "number", placeholder = "Nhập đơn giá" } })
+                    @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GiaKhuyenMai, "Giá khuyến mãi")
+                    @Html.EditorFor(model => model.GiaKhuyenMai, new { htmlAttributes = new { @class = "form-control", type = "number", placeholder = "Nhập giá KM (nếu có)" } })
+                    @Html.ValidationMessageFor(model => model.GiaKhuyenMai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoLuongTon, "Số lượng tồn")
+                @Html.EditorFor(model => model.SoLuongTon, new { htmlAttributes = new { @class = "form-control", type = "number", placeholder = "Nhập số lượng" } })
+                @Html.ValidationMessageFor(model => model.SoLuongTon, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Hang, "Hãng")
+                    @Html.EditorFor(model => model.Hang, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên hãng" } })
+                    @Html.ValidationMessageFor(model => model.Hang, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.XuatXu, "Xuất xứ")
+                    @Html.EditorFor(model => model.XuatXu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập xuất xứ" } })
+                    @Html.ValidationMessageFor(model => model.XuatXu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BaoHanh, "Bảo hành")
+                @Html.EditorFor(model => model.BaoHanh, new { htmlAttributes = new { @class = "form-control", placeholder = "Ví dụ: 12 tháng" } })
+                @Html.ValidationMessageFor(model => model.BaoHanh, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MoTaChung, "Mô tả chung")
+                @Html.TextAreaFor(model => model.MoTaChung, new { @class = "form-control", placeholder = "Nhập mô tả ngắn gọn về sản phẩm" })
+                @Html.ValidationMessageFor(model => model.MoTaChung, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MoTaChiTiet, "Mô tả chi tiết")
+                @Html.TextAreaFor(model => model.MoTaChiTiet, new { @class = "form-control", placeholder = "Nhập mô tả chi tiết về sản phẩm", rows = 5 })
+                @Html.ValidationMessageFor(model => model.MoTaChiTiet, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-save">Lưu Thay Đổi</button>
+                @Html.ActionLink("Quay Lại", "Index", null, new { @class = "btn-back" })
+            </div>
+        }
+    </div>
+</div>

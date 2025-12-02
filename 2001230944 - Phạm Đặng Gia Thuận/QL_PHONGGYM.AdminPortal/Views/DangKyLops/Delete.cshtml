@@ -1,0 +1,102 @@
+﻿@model QL_PHONGGYM.AdminPortal.Models.DangKyLop
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: #e8f3ff;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        color: #c62828;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #0b67c2;
+    }
+
+    .delete-container {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 700px;
+        margin: auto;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        border-left: 6px solid #ff6b6b;
+    }
+
+    dt {
+        font-weight: bold;
+        color: #0a4f91;
+        margin-top: 10px;
+    }
+
+    dd {
+        margin-bottom: 10px;
+        padding-left: 5px;
+        color: #333;
+    }
+
+    .btn-delete {
+        background-color: #d32f2f;
+        border: none;
+        padding: 8px 18px;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .btn-delete:hover {
+            background-color: #b71c1c;
+        }
+
+    a {
+        color: #0b67c2;
+        font-weight: bold;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<h2>Xóa đăng ký lớp</h2>
+<h3>Bạn có chắc chắn muốn xóa mục này?</h3>
+
+<div class="delete-container">
+
+    <dl class="dl-horizontal">
+
+        <dt>Khách hàng</dt>
+        <dd>@Html.DisplayFor(model => model.KhachHang.TenKH)</dd>
+
+        <dt>Lớp học</dt>
+        <dd>@Html.DisplayFor(model => model.LopHoc.TenLop)</dd>
+
+        <dt>Ngày đăng ký</dt>
+        <dd>@Html.DisplayFor(model => model.NgayDangKy)</dd>
+
+        <dt>Trạng thái</dt>
+        <dd>@Html.DisplayFor(model => model.TrangThai)</dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <br />
+
+        <input type="submit" value="Delete" class="btn-delete" />
+
+        @Html.ActionLink("← Back to List", "Index", null, new { @class = "btn-back" })
+    }
+
+</div>
